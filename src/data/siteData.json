@@ -1,0 +1,22 @@
+{
+    "title": "<DEFAULT PAGE TITLE HERE>",
+    "description": "<DEFAULT PAGE META DESCRIPTION HERE>",
+    "logo": {
+        "src": "<LINK TO LOGO HERE>",
+        "alt": "<SITE NAME> Logo",
+        "width": "43",
+        "height": "51"
+    },
+    "image": {
+        "src": "<LINK TO DEFAULT IMAGE HERE>",
+        "alt": "<DEFAULT IMAGE ALT TEXT",
+        "width": "1200",
+        "height": "600"
+    },
+    "twitterHandle": null,
+    "organizationName": "<ORGANIZATION NAME HERE>",
+    "url": "<SITE HOME PAGE URL HERE>",
+    "websiteId": "<SITE HOME PAGE URL HERE>/#website",
+    "organizationId": "<SITE HOME PAGE URL HERE>/#organization",
+    "breadcrumbId": "<SITE HOME PAGE URL HERE>/#breadcrumb"
+}

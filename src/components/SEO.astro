@@ -1,0 +1,89 @@
+---
+// Import necessary data and utilities
+import siteData from '../data/siteData.json';
+import jsonLDGenerator from '../utils/SEOJsonLoad';
+import { buildTags } from '../utils/BuildSEOTags';
+import type { SeoProps } from '../utils/SEOTypes';
+import type { BuildDefaultStructuredDataProps, StructuredDataInput } from '../utils/StructuredData';
+import buildDefaultStructuredData from '../utils/StructuredData';
+
+// Define Props interface
+interface Props {
+    title: string;
+    description: string;
+    url: URL;
+    structuredData?: StructuredDataInput[]; // Optional
+    image?: {
+        src?: string;
+        alt?: string;
+    }; // Optional
+    noRobots?: boolean; // Optional
+}
+
+const { title, description, url = Astro.url, structuredData, image = {}, noRobots } = Astro.props;
+
+// Build default structured data input
+const buildDefaultStructureDataInput: BuildDefaultStructuredDataProps = {
+    title: title,
+    url: Astro.url,
+};
+
+// Generate JSON-LD
+const jsonLD = jsonLDGenerator(
+    structuredData ?? buildDefaultStructuredData(buildDefaultStructureDataInput),
+);
+
+//Build SEO props for building meta/link tags
+const seoConfig: SeoProps = {
+    title,
+    description,
+    noindex: noRobots,
+    nofollow: noRobots,
+    canonical: url.toString(),
+    openGraph: {
+        title,
+        description,
+        url: url.toString(),
+        siteName: siteData.organizationName,
+        type: url.toString().includes('blog') ? 'article' : 'website',
+        images: [
+            {
+                url: image.src ?? siteData.image.src,
+                alt: image.alt ?? siteData.image.alt,
+                secureUrl: image.src ?? siteData.image.src,
+                type: 'image/png',
+                width: 1200,
+                height: 630,
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        image: image.src ?? siteData.image.src,
+        imageAlt: image.alt ?? siteData.image.alt,
+        url: url.toString(), // Ensure this is a string
+        domain: 'construx-template.netlify.app',
+        ...(siteData.twitterHandle ? { site: siteData.twitterHandle } : {}),
+        ...(siteData.twitterHandle ? { creator: siteData.twitterHandle } : {}),
+    },
+    additionalMetaTags: [],
+    additionalLinkTags: [],
+};
+
+// Generate meta tags using the buildTags function
+const metaTags = buildTags(seoConfig);
+---
+
+<!-- Head Section -->
+<meta charset='UTF-8' />
+<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+<link rel='icon' type='image/svg+xml' href={siteData.logo.src} />
+<meta name='generator' content={Astro.generator} />
+
+<!-- Title, Meta, and Twitter Tags -->
+<Fragment set:html={metaTags} />
+
+<!-- JSON-LD -->
+<script type='application/ld+json' set:html={jsonLD} />

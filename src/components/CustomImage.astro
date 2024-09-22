@@ -1,0 +1,91 @@
+---
+import type { GetImageResult, ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+
+interface Props {
+    mobileImgUrl: ImageMetadata | string;
+    desktopImgUrl: ImageMetadata | string;
+    imageSizes: [number, number][];
+    alt: string;
+    loading?: 'eager' | 'lazy';
+    decoding?: 'async' | 'auto' | 'sync';
+    classList?: string;
+    imgClassList?: string;
+}
+
+const {
+    mobileImgUrl,
+    desktopImgUrl,
+    imageSizes,
+    alt,
+    loading = 'lazy',
+    decoding = 'async',
+    classList,
+    imgClassList,
+} = Astro.props;
+
+async function generateImage(
+    src: string | ImageMetadata,
+    format: string,
+    width: number,
+    height: number,
+): Promise<GetImageResult> {
+    return await getImage({
+        src: src,
+        format: format,
+        width: width ?? 0,
+        height: height ?? 0,
+        quality: 'high',
+    });
+}
+
+const [mobileWidth, mobileHeight] = imageSizes[0];
+const [desktopWidth, desktopHeight] = imageSizes[1];
+
+const mobileImgAVIF = await generateImage(mobileImgUrl, 'avif', mobileWidth, mobileHeight);
+const desktopImgAVIF = await generateImage(desktopImgUrl, 'avif', desktopWidth, desktopHeight);
+
+const mobileImgWebP = await generateImage(mobileImgUrl, 'webp', mobileWidth, mobileHeight);
+const desktopImgWebP = await generateImage(desktopImgUrl, 'webp', desktopWidth, desktopHeight);
+---
+
+<picture class={classList}>
+    <!-- AVIF Sources -->
+    <source
+        type='image/avif'
+        media='(max-width: 810px)'
+        srcset={mobileImgAVIF.src}
+        height={mobileImgAVIF.attributes.height}
+        width={mobileImgAVIF.attributes.width}
+    />
+    <source
+        type='image/avif'
+        media='(min-width: 811px)'
+        srcset={desktopImgAVIF.src}
+        height={desktopImgAVIF.attributes.height}
+        width={desktopImgAVIF.attributes.width}
+    />
+
+    <!-- WebP Sources -->
+    <source
+        type='image/webp'
+        media='(max-width: 810px)'
+        srcset={mobileImgWebP.src}
+        height={mobileImgWebP.attributes.height}
+        width={mobileImgWebP.attributes.width}
+    />
+    <source
+        type='image/webp'
+        media='(min-width: 811px)'
+        srcset={desktopImgWebP.src}
+        height={desktopImgWebP.attributes.height}
+        width={desktopImgWebP.attributes.width}
+    />
+    <img
+        class={imgClassList}
+        src={typeof desktopImgUrl === 'string' ? desktopImgUrl : desktopImgUrl.src}
+        alt={alt}
+        loading={loading}
+        decoding={decoding}
+    />
+</picture>

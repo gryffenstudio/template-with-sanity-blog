@@ -1,0 +1,59 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@layer base {
+    h1 {
+        
+    }
+    h2 {
+        
+    }
+    h3 {
+        
+    }
+    h4 {
+    }
+    ol {
+        
+    }
+    ul {
+        
+    }
+    a {
+    }
+    button {
+        @apply touch-manipulation;
+    }
+    p {
+    }
+    p:empty {
+        @apply my-8;
+    }
+    p:empty + p:empty {
+        @apply my-16;
+    }
+    input {
+        @apply appearance-none outline-none focus:outline-none focus:ring-0;
+    }
+    textarea {
+        @apply appearance-none outline-none focus:outline-none focus:ring-0;
+    }
+    label {
+    
+    }
+    select {
+        @apply appearance-none outline-none;
+    }
+}
+
+@layer components {
+}
+
+@layer utilities {
+    .hamburger-toggle {
+        @apply [&>div::after]:translate-y-0 [&>div::after]:-rotate-45 [&>div::before]:translate-y-0 [&>div::before]:rotate-45 [&>div]:h-0 [&>div]:bg-white;
+    }
+}
