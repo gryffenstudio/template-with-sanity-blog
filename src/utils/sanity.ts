@@ -6,7 +6,7 @@ import type { Image } from '@sanity/types';
 import groq from 'groq';
 
 const sanityClient = createClient({
-    projectId: '<PROJECT ID HERE',
+    projectId: 'xxxxxxxxx', // INSERT PROJECT ID HERE
     dataset: 'production',
     useCdn: false,
     apiVersion: '2024-05-14',

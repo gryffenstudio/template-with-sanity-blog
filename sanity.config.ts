@@ -5,7 +5,7 @@ import { schemaTypes } from './schema';
 export default defineConfig({
     name: 'default',
     title: 'construx',
-    projectId: '<PROJECT ID HERE>',
+    projectId: 'xxxxxxxxx', // INSERT PROJECT ID HERE
     dataset: 'production',
     plugins: [structureTool(), visionTool()],
     schema: {
