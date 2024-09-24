@@ -1,20 +1,13 @@
-import { createClient } from '@sanity/client';
+import { sanityClient } from 'sanity:client';
 import type { PortableTextBlock } from '@portabletext/types';
 import type { ImageAsset, Slug } from '@sanity/types';
 import imageUrlBuilder from '@sanity/image-url';
-import type { Image } from '@sanity/types';
 import groq from 'groq';
-
-const sanityClient = createClient({
-    projectId: 'xxxxxxxxx', // INSERT PROJECT ID HERE
-    dataset: 'production',
-    useCdn: false,
-    apiVersion: '2024-05-14',
-});
+import type { SanityAsset } from '@sanity/image-url/lib/types/types';
 
 const imageBuilder = imageUrlBuilder(sanityClient);
 
-export function urlFor(source: Image) {
+export function urlFor(source: SanityAsset) {
     return imageBuilder.image(source);
 }
 
