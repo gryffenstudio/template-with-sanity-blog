@@ -32,6 +32,9 @@ export default defineConfig({
             useCdn: false,
             apiVersion: '2024-05-14',
             studioBasePath: '/sanity-studio-admin',
+            stega: {
+                studioUrl: '/sanity-studio-admin',
+            },
         }),
         icon({
             iconDir: 'src/assets/svgs',
