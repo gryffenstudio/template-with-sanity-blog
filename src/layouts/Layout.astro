@@ -42,7 +42,7 @@ const visualEditingEnabled = import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLE
             url={Astro.url}
             image={image}
             structuredData={structuredData}
-            noRobots={noRobots ?? !visualEditingEnabled}
+            noRobots={noRobots ?? visualEditingEnabled}
         />
     </head>
     <body class='flex min-h-dvh flex-col'>
