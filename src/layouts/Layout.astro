@@ -5,6 +5,7 @@ import SEO from '../components/SEO.astro';
 import '../styles/global.css';
 import type { StructuredDataInput } from '../utils/StructuredData';
 import { VisualEditing } from '@sanity/astro/visual-editing';
+import { visualEditingEnabled } from '../../sanity/lib/api';
 
 interface Props {
     title: string;
@@ -16,7 +17,6 @@ interface Props {
 
 let { title, description, noRobots, image, structuredData } = Astro.props;
 
-const visualEditingEnabled = import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === 'true';
 ---
 
 <!doctype html>

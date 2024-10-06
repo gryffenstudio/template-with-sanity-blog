@@ -2,11 +2,10 @@ import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
 import { presentationTool } from 'sanity/presentation';
-import { schemaTypes } from './schema';
-import { resolve } from './src/utils/sanity';
+import { projectId, dataset } from './sanity/lib/api';
+import { schemaTypes } from './sanity/schemas';
+import { resolve } from './sanity/plugins/resolve';
 
-const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
-const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
 
 export default defineConfig({
     name: 'default',
